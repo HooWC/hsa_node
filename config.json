@@ -1,0 +1,21 @@
+{
+    "dbName": "InfoHSA",
+    "dbConfig": {
+        "server": "HSPDC", 
+        "options": {
+            "port": 1433,
+            "trustServerCertificate": true,
+            "cryptoCredentialsDetails": {
+                "minVersion": "TLSv1"
+            }
+        },
+        "authentication": {
+            "type": "default",
+            "options": {
+                "userName": "api_hsa_user",
+                "password": "1F9UXy$H31w6zg8X;H[9"
+            }
+        }
+    },
+    "secret": "4b48523e-615d-4548-ac80-069eb92ee350 a1d224e6-2106-456c-878f-3586400ffbb6 a1e9808b-67ac-494c-8d5e-24516cf95f76"
+}

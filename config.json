@@ -1,7 +1,7 @@
 {
     "dbName": "InfoHSA",
     "dbConfig": {
-        "server": "HSPDC", 
+        "server": "HSPDC",
         "options": {
             "port": 1433,
             "trustServerCertificate": true,

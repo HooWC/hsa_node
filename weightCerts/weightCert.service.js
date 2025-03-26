@@ -75,30 +75,3 @@ async function getAll(page, size, search, orderBy, orderDir) {
     
     return weightCert;
 }
-
-//=======
-
-/* const sql = require('mssql');
-const db = require('../_helpers/db'); // 数据库连接
-
-module.exports = { getAll };
-
-async function getAll(page = 1, size = 20, search = '', orderBy = 'model_id', orderDir = 'ASC') {
-    const conn = await db.getConnection();
-    const offset = (page - 1) * size;
-    const query = `
-        SELECT * FROM weightCerts 
-        WHERE model_code LIKE @search OR make LIKE @search
-        ORDER BY ${orderBy} ${orderDir}
-        OFFSET @offset ROWS FETCH NEXT @size ROWS ONLY
-    `;
-    
-    const res = await conn.request()
-        .input('search', sql.NVarChar, `%${search}%`)
-        .input('offset', sql.Int, offset)
-        .input('size', sql.Int, size)
-        .query(query);
-    
-    return res.recordset;
-}
- */

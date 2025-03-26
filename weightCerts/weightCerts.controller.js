@@ -19,22 +19,3 @@ function getAll(req, res, next) {
         .catch(next);
 }
 
-//====
-
-// weightCerts.controller.js (简化版)
-/* const express = require('express');
-const router = express.Router();
-const weightCertService = require('./weightCert.service');
-
-router.get('/', async (req, res) => {
-    try {
-        const { page, size, search, orderBy, orderDir } = req.query;
-        const weightCerts = await weightCertService.getAll(page, size, search, orderBy, orderDir);
-        res.json(weightCerts);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-module.exports = router; */
-

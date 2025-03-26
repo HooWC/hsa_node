@@ -21,6 +21,10 @@ app.use((req, res, next) => {
 app.use('/users', require('./users/users.controller')); // 处理 /users 相关 API
 app.use('/weightCerts', require('./weightCerts/weightCerts.controller')); // 处理 /weightCerts 相关 API
 app.use('/plans', require('./plans/plans.controller')); // 处理 /plans 相关 API
+app.use('/cmh', require('./cmh/cmh.controller')); // 添加 CMH 路由
+app.use('/chassismh', require('./chassismh/chassismh.controller'));
+app.use('/soq', require('./soq/soq.controller'));
+app.use('/chassisfile', require('./chassisfile/chassisfile.controller'));
 
 // 全局错误处理
 app.use(errorHandler);

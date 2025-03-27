@@ -23,7 +23,8 @@ app.use('/weightCerts', require('./weightCerts/weightCerts.controller')); // 处
 app.use('/plans', require('./plans/plans.controller')); // 处理 /plans 相关 API
 app.use('/cmh', require('./cmh/cmh.controller')); // 添加 CMH 路由
 app.use('/chassismh', require('./chassismh/chassismh.controller'));
-app.use('/soq', require('./soq/soq.controller'));
+app.use('/dsoi', require('./dsoi/dsoi.controller'));
+app.use('/quote', require('./quote/quote.controller'));
 app.use('/chassisfile', require('./chassisfile/chassisfile.controller'));
 
 // 全局错误处理

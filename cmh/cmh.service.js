@@ -13,15 +13,25 @@ module.exports = {
     delete: _delete
 };
 
-async function getAll() {
+async function getAll(page = 1, size = 100) {
     const conn = await db.getConnection();
     const res = await conn.request()
-        .execute("api_getallmstock");
+        .input('page', sql.Int, page)
+        .input('size', sql.Int, size)
+        .execute("api_getAllMstock_page");
    
     var mstock = new Array();
     
     for (var i = 0; i < res.recordset.length; i++) {
         var id = res.recordset[i].id;
+        var bc_if = res.recordset[i].bc_if;
+        var reg_no = res.recordset[i].reg_no;
+        var make = res.recordset[i].make;
+        var allc_id = res.recordset[i].allc_id;
+        var engine_id = res.recordset[i].engine_id;
+        var eserial_no = res.recordset[i].eserial_no;
+        var ap_status = res.recordset[i].ap_status;
+        var ap_id = res.recordset[i].ap_id;
         var stock_id = res.recordset[i].stock_id;
         var internal_id = res.recordset[i].internal_id;
         var item_id = res.recordset[i].item_id;
@@ -74,6 +84,14 @@ async function getAll() {
         
         mstock.push({
             'id': id, 
+            'bc_if': bc_if,
+            'reg_no': reg_no,
+            'make': make,
+            'allc_id': allc_id,
+            'engine_id': engine_id,
+            'eserial_no': eserial_no,
+            'ap_status': ap_status,
+            'ap_id': ap_id,
             'stock_id': stock_id, 
             'internal_id': internal_id,
             'item_id': item_id,
@@ -132,7 +150,7 @@ async function getAll() {
 async function getById(id) {
     const conn = await db.getConnection();
     const res = await conn.request()
-        .input('id', id)
+        .input('chassis', id)
         .execute("api_getmstockbychassis");
    
     if (res.recordset.length != 1) {
@@ -143,6 +161,14 @@ async function getById(id) {
     
     return {
         'id': item.id, 
+        'bc_if': item.bc_if,
+        'reg_no': item.reg_no,
+        'make': item.make,
+        'allc_id': item.allc_id,
+        'engine_id': item.engine_id,
+        'eserial_no': item.eserial_no,
+        'ap_status': item.ap_status,
+        'ap_id': item.ap_id,
         'stock_id': item.stock_id, 
         'internal_id': item.internal_id,
         'item_id': item.item_id,
@@ -153,7 +179,45 @@ async function getById(id) {
         'po_id': item.po_id,
         'poi_id': item.poi_id,
         'vendor': item.vendor,
-        'status': item.status
+        'status': item.status,
+        'so_id': item.so_id,
+        'soi_id': item.soi_id,
+        'location': item.location,
+        'arrivedt': item.arrivedt,
+        'acc_arrivedt': item.acc_arrivedt,
+        'sir': item.sir,
+        'siri': item.siri,
+        'grn_id': item.grn_id,
+        'grni_id': item.grni_id,
+        'job_id': item.job_id,
+        'do_id': item.do_id,
+        'doi_id': item.doi_id,
+        'customer': item.customer,
+        'p_status': item.p_status,
+        'remark': item.remark,
+        'service': item.service,
+        'contra': item.contra,
+        'obsolete': item.obsolete,
+        'com_no': item.com_no,
+        'm_reg_no': item.m_reg_no,
+        'ccode': item.ccode,
+        'corigin_if': item.corigin_if,
+        'pcode': item.pcode,
+        'porigin_if': item.porigin_if,
+        'containercs_id': item.containercs_id,
+        'containercb_id': item.containercb_id,
+        'inv_no_cs': item.inv_no_cs,
+        'inv_no_cb': item.inv_no_cb,
+        'picloc1': item.picloc1,
+        'picloc2': item.picloc2,
+        'print_qty': item.print_qty,
+        'selectbit': item.selectbit,
+        'createby': item.createby,
+        'createdt': item.createdt,
+        'modifyby': item.modifyby,
+        'modifydt': item.modifydt,
+        'timemark': item.timemark,
+        'identitymark': item.identitymark,
     };
 }
 

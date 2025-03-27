@@ -14,7 +14,11 @@ module.exports = router;
 
 // http://localhost:5000/cmh?page=1&size=5&search=a&orderBy=stock_id&orderDir=ASC
 function getAll(req, res, next) {
-    cmhService.getAll()
+    // 从查询参数中获取 page 和 size
+    const page = parseInt(req.query.page) || 1;
+    const size = parseInt(req.query.size) || 100;
+    
+    cmhService.getAll(page, size)
         .then(mstock => res.json(mstock))
         .catch(next);
 }

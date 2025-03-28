@@ -21,6 +21,7 @@ async function getByStockId(stock_id) {
         var id = res.recordset[i].id;
         var soi_id = res.recordset[i].soi_id;
         var so_id = res.recordset[i].so_id;
+        var ddate = res.recordset[i].ddate;
         var seq = res.recordset[i].seq;
         var nature = res.recordset[i].nature;
         var item_id = res.recordset[i].item_id;
@@ -103,6 +104,7 @@ async function getByStockId(stock_id) {
             'id': id,
             'soi_id': soi_id,
             'so_id': so_id,
+            'ddate': ddate,
             'seq': seq,
             'nature': nature,
             'item_id': item_id,

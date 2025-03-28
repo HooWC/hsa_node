@@ -91,10 +91,6 @@ async function create(params) {
     if (resChecking.recordset.length >= 1)
         throw 'Username "' + params.username + '" is already taken';
 
-    // if (await db.User.findOne({ where: { username: params.username } })) {
-    //     throw 'Username "' + params.username + '" is already taken';
-    // }
-
     // hash password
     if (params.password) {
         passwordHash = await bcrypt.hash(params.password, 10);
@@ -102,17 +98,27 @@ async function create(params) {
         throw 'No password is provided';
     }
 
+    // Set default role to 'User' if not provided
+    const role = params.role || 'User';
+
+    // Convert Title based on gender input
+    let title = params.title;
+    if (title && (title.toLowerCase() === 'male')) {
+        title = 'Mr.';
+    } else if (title && (title.toLowerCase() === 'female')) {
+        title = 'Ms.';
+    }
+
     // save user
     const res = await conn.request()
-        .input("title", params.title)
+        .input("title", title)
         .input("firstName", params.firstName)
         .input("lastName", params.lastName)
         .input("email", params.email)
-        .input("role", params.role)
+        .input("role", role)
         .input("username", params.username)
         .input("password", passwordHash)
         .execute("api_addUser");
-    // await db.User.create(params);
 
     return res;
 }

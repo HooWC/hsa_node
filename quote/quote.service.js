@@ -21,6 +21,8 @@ async function getByStockId(stock_id) {
         var id = res.recordset[i].id;
         var quoti_id = res.recordset[i].quoti_id;
         var quot_id = res.recordset[i].quot_id;
+        var valid_fr = res.recordset[i].valid_fr;
+        var valid_to = res.recordset[i].valid_to;
         var seq = res.recordset[i].seq;
         var nature = res.recordset[i].nature;
         var item_id = res.recordset[i].item_id;
@@ -64,6 +66,8 @@ async function getByStockId(stock_id) {
             'id': id,
             'quoti_id': quoti_id,
             'quot_id': quot_id,
+            'valid_fr': valid_fr,
+            'valid_to': valid_to,
             'seq': seq,
             'nature': nature,
             'item_id': item_id,

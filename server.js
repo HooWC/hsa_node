@@ -1,7 +1,10 @@
+
 require('rootpath')(); // 让 require() 可以使用相对路径，避免使用 ../../../ 这种复杂路径
 const cors = require('cors'); // 允许跨域访问
 const express = require('express'); // 引入 Express 框架
+const https = require("https"); // HTTPS 服务器
 const http = require("http"); // HTTP 服务器
+const fs = require("fs"); // 处理文件系统
 const app = express(); // 创建 Express 应用实例
 
 const errorHandler = require('_middleware/error-handler'); // 引入全局错误处理中间件
@@ -11,13 +14,6 @@ app.use(express.json()); // 解析 JSON 格式的请求体
 app.use(express.urlencoded({ extended: true })); // 解析 URL 编码格式的请求体
 app.use(cors()); // 允许跨域请求
 
-// 添加请求日志中间件（帮助调试）
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  next();
-});
-
-// 注册 API 路由
 app.use('/users', require('./users/users.controller')); // 处理 /users 相关 API
 app.use('/weightCerts', require('./weightCerts/weightCerts.controller')); // 处理 /weightCerts 相关 API
 app.use('/plans', require('./plans/plans.controller')); // 处理 /plans 相关 API
@@ -30,15 +26,64 @@ app.use('/chassisfile', require('./chassisfile/chassisfile.controller'));
 // 全局错误处理
 app.use(errorHandler);
 
-// 添加未找到路由的处理
-app.use((req, res) => {
-  res.status(404).json({ message: 'API endpoint not found' });
-});
+// 配置 HTTPS 证书
+const options = {
+    key: fs.readFileSync("hsa-key.key"), // 读取私钥文件
+    cert: fs.readFileSync("hongsenghq_ddns_net.pem"), // 读取 SSL 证书文件
+    passphrase: "hsonlinehsgroup1234%" // 证书解密密码
+};
 
-// 设定 HTTP 服务器端口
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 3000) : 5000; // HTTP 端口
+// 设定 HTTP 和 HTTPS 服务器端口
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 3000) : 5230; // HTTP 端口
+const port_ssl = process.env.NODE_ENV === 'production' ? (process.env.PORT || 3443) : 5231; // HTTPS 端口
 
 // 启动 HTTP 服务器
-http.createServer(app).listen(port, () => 
-    console.log('API server running on http://localhost:' + port)
+http.createServer(options, app).listen(port, () => 
+    console.log('Server listening on port ' + port)
 );
+
+// 启动 HTTPS 服务器
+https.createServer(options, app).listen(port_ssl, () => 
+    console.log('Server listening on port ' + port_ssl)
+);
+
+/* ==
+
+require('rootpath')();
+const cors = require('cors');
+const express = require('express');
+const https = require("https")
+const http = require("http");
+const app = express();
+
+const fs = require("fs");
+
+const errorHandler = require('_middleware/error-handler');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+app.use(cors());
+
+// api routes
+app.use('/users', require('./users/users.controller'));
+app.use('/weightCerts', require('./weightCerts/weightCerts.controller'));
+app.use('/plans', require('./plans/plans.controller'));
+
+// global error handler
+app.use(errorHandler);
+
+const options = {
+    key: fs.readFileSync("hsa-key.key"),
+    cert: fs.readFileSync("hongsenghq_ddns_net.pem"),
+    passphrase: "hsonlinehsgroup1234%"
+};
+
+
+
+// start server
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4200;
+const port_ssl = process.env.NODE_ENV === 'production' ? (process.env.PORT || 443) : 4201;
+
+http.createServer(options, app).listen(port, () => console.log('Server listening on port ' + port));
+https.createServer(options, app).listen(port_ssl, () => console.log('Server listening on port ' + port_ssl));
+// app.listen(port, () => console.log('Server listening on port ' + port)); */

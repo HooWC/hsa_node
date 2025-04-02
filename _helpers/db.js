@@ -1,6 +1,6 @@
 const mssql = require('mssql');
 
-const { dbName, dbConfig } = require('config.json');
+const { dbName, dbConfig } = require('../config.json');
 const host = dbConfig.server;
 const { userName, password } = dbConfig.authentication.options;
 

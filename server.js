@@ -52,6 +52,9 @@ const cors = require('cors'); // 允许跨域访问
 const express = require('express'); // 引入 Express 框架
 const app = express(); // 创建 Express 应用实例
 
+const validateRequest = require('./_middleware/validate-request');
+const authorize = require('./_middleware/authorize')
+
 const errorHandler = require('./_middleware/error-handler'); // 引入全局错误处理中间件
 const userService = require('./users/user.service'); // 引入 userService
 

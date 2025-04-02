@@ -14,6 +14,15 @@ app.use(express.json()); // 解析 JSON 格式的请求体
 app.use(express.urlencoded({ extended: true })); // 解析 URL 编码格式的请求体
 app.use(cors()); // 允许跨域请求
 
+// For testing api
+app.get('/', (req, res) => {
+  res.status(200).json('Welcome, HSAHQ new version');
+});
+
+app.get('/home', (req, res) => {
+  res.status(200).json('Welcome, your app is working well 123456');
+});
+
 app.use('/users', require('./users/users.controller')); // 处理 /users 相关 API
 app.use('/weightCerts', require('./weightCerts/weightCerts.controller')); // 处理 /weightCerts 相关 API
 app.use('/plans', require('./plans/plans.controller')); // 处理 /plans 相关 API
@@ -34,8 +43,8 @@ const options = {
 };
 
 // 设定 HTTP 和 HTTPS 服务器端口
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 3000) : 5000; // HTTP 端口
-const port_ssl = process.env.NODE_ENV === 'production' ? (process.env.PORT || 3443) : 5001; // HTTPS 端口
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4200; // HTTP 端口
+const port_ssl = process.env.NODE_ENV === 'production' ? (process.env.PORT || 443) : 4201; // HTTPS 端口
 
 // 启动 HTTP 服务器
 http.createServer(options, app).listen(port, () => 

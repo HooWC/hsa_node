@@ -47,14 +47,19 @@ https.createServer(options, app).listen(port_ssl, () =>
     console.log('Server listening on port ' + port_ssl)
 );  */
 
-const express = require('express');
-const app = express();
+require('rootpath')(); // 让 require() 可以使用相对路径，避免使用 ../../../ 这种复杂路径
+const cors = require('cors'); // 允许跨域访问
+const express = require('express'); // 引入 Express 框架
+const app = express(); // 创建 Express 应用实例
+
+const errorHandler = require('_middleware/error-handler'); // 引入全局错误处理中间件
 
 // 配置 Express 解析 JSON 和 URL 编码请求
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(express.json()); // 解析 JSON 格式的请求体
+app.use(express.urlencoded({ extended: true })); // 解析 URL 编码格式的请求体
+app.use(cors()); // 允许跨域请求
 
+// 路由配置
 app.use('/users', require('./users/users.controller')); // 处理 /users 相关 API
 app.use('/weightCerts', require('./weightCerts/weightCerts.controller')); // 处理 /weightCerts 相关 API
 app.use('/plans', require('./plans/plans.controller')); // 处理 /plans 相关 API
@@ -64,8 +69,11 @@ app.use('/dsoi', require('./dsoi/dsoi.controller'));
 app.use('/quote', require('./quote/quote.controller'));
 app.use('/chassisfile', require('./chassisfile/chassisfile.controller'));
 
-// 启动 Express 服务器，监听 Vercel 提供的端口
-const port = process.env.PORT || 5000; // 如果没有设置 PORT 环境变量，默认为 5000
+// 全局错误处理
+app.use(errorHandler);
+
+// 启动 HTTP 服务
+const port = process.env.PORT || 3000;  // 使用 Vercel 提供的端口
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });

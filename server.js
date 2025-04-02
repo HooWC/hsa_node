@@ -50,6 +50,7 @@ https.createServer(options, app).listen(port_ssl, () =>
 require('rootpath')(); // 让 require() 可以使用相对路径，避免使用 ../../../ 这种复杂路径
 const cors = require('cors'); // 允许跨域访问
 const express = require('express'); // 引入 Express 框架
+const Joi = require('joi');
 const app = express(); // 创建 Express 应用实例
 
 const validateRequest = require('./_middleware/validate-request');

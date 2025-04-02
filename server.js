@@ -60,14 +60,22 @@ app.use(express.urlencoded({ extended: true })); // 解析 URL 编码格式的�
 app.use(cors()); // 允许跨域请求
 
 // 路由配置
-app.use('/users', require('./users/users.controller')); // 处理 /users 相关 API
+app.get('/', (req, res) => {
+    res.status(200).json('Welcome, Hoo');
+  });
+
+app.get('/home', (req, res) => {
+  res.status(200).json('Welcome, your app is working well');
+});
+
+/* app.use('/users', require('./users/users.controller')); // 处理 /users 相关 API
 app.use('/weightCerts', require('./weightCerts/weightCerts.controller')); // 处理 /weightCerts 相关 API
 app.use('/plans', require('./plans/plans.controller')); // 处理 /plans 相关 API
 app.use('/cmh', require('./cmh/cmh.controller')); // 添加 CMH 路由
 app.use('/chassismh', require('./chassismh/chassismh.controller'));
 app.use('/dsoi', require('./dsoi/dsoi.controller'));
 app.use('/quote', require('./quote/quote.controller'));
-app.use('/chassisfile', require('./chassisfile/chassisfile.controller'));
+app.use('/chassisfile', require('./chassisfile/chassisfile.controller')); */
 
 // 全局错误处理
 app.use(errorHandler);

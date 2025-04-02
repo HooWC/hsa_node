@@ -52,7 +52,7 @@ const cors = require('cors'); // 允许跨域访问
 const express = require('express'); // 引入 Express 框架
 const app = express(); // 创建 Express 应用实例
 
-//const errorHandler = require('_middleware/error-handler'); // 引入全局错误处理中间件
+const errorHandler = require('./_middleware/error-handler'); // 引入全局错误处理中间件
 
 // 配置 Express 解析 JSON 和 URL 编码请求
 app.use(express.json()); // 解析 JSON 格式的请求体
@@ -70,17 +70,17 @@ app.get('/home', (req, res) => {
   res.status(200).json('Welcome, your app is working well');
 });
 
-app.use('/users', require('./users/users.controller')); // 处理 /users 相关 API
+/* app.use('/users', require('./users/users.controller')); // 处理 /users 相关 API
 app.use('/weightCerts', require('./weightCerts/weightCerts.controller')); // 处理 /weightCerts 相关 API
 app.use('/plans', require('./plans/plans.controller')); // 处理 /plans 相关 API
 app.use('/cmh', require('./cmh/cmh.controller')); // 添加 CMH 路由
 app.use('/chassismh', require('./chassismh/chassismh.controller'));
 app.use('/dsoi', require('./dsoi/dsoi.controller'));
 app.use('/quote', require('./quote/quote.controller'));
-app.use('/chassisfile', require('./chassisfile/chassisfile.controller'));
+app.use('/chassisfile', require('./chassisfile/chassisfile.controller')); */
 
 // 全局错误处理
-//app.use(errorHandler);
+app.use(errorHandler);
 
 // 启动 HTTP 服务
 const port = process.env.PORT || 3000;  // 使用 Vercel 提供的端口

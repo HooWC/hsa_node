@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const sql = require('mssql');
 
-const { secret } = require('config.json');
-const db = require('_helpers/db');
+const { secret } = require('../config.json');
+const db = require('../_helpers/db');
 
 module.exports = {
     getByStockId

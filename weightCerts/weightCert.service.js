@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const sql = require('mssql');
 
 const { secret } = require('../config.json');
-const db = require('_helpers/db');
+const db = require('../_helpers/db');
 
 module.exports = {
     getAll
